@@ -11,13 +11,16 @@ app.get('/', function(req, res) {
 
 app.get('/mean', function(req, res) {
 
-    
-function mean(nums) {
-    return nums.length / 2
-}
 
     return res.send(mean(req));
 });
+
+function mean(nums) {
+    debugger;
+    let meanOfNums = nums.length / 2
+    console.log(meanOfNums);
+}
+mean([1,2,3,4,5])
 
 app.get('/median', function(req, res) {
     return res.send('blue');
