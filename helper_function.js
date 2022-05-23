@@ -1,18 +1,91 @@
 function findMean(nums) {
-    let meanOfNums = nums.length / 2
-    console.log(meanOfNums);
+    if(nums.length === 0) return 0;
+    return nums.reduce(function (acc, cur) {
+        return acc + cur;
+      }) / nums.length
 }
 findMean([1,2,3,4,5])
 
 function findMedian(nums) {
-    let firstIndex = nums[0]
-    let lastIndex = nums.length - 1
+    nums.sort((a, b) => a - b);
 
-    while (firstindex <= lastIndex) {
-        let median = Math.floor(lastIndex - firstIndex) / 2
+    let middleIndex = Math.floor(nums.length / 2);
+    let median;
 
-       console.log(median)
+    if (nums.length % 2 === 0) {
+        median = (nums[middleIndex] + nums[middleIndex - 1]) / 2;
+    } else {
+    median = nums[middleIndex];
+    }
+    return median
 
     }
-}
+
 findMedian([1,2,3,4,5,6])
+
+/**
+ * Find the most common element in the array
+ * @param {Array} arr any array
+ */
+ function findMode(arr) {
+    let freqCounter = createFrequencyCounter(arr);
+  
+    let count = 0;
+    let mostFrequent;
+  
+    for (let key in freqCounter) {
+      if (freqCounter[key] > count) {
+        mostFrequent = key;
+        count = freqCounter[key];
+      }
+    }
+  
+    return +mostFrequent;
+  }
+  
+
+
+
+/**
+ * Build a frequency counter object from an array
+ * @param {Array} arr any array
+ */
+ function createFrequencyCounter(arr) {
+    return arr.reduce(function(acc, next) {
+      acc[next] = (acc[next] || 0) + 1;
+      return acc;
+    }, {});
+  }
+  
+
+
+/**
+ * Attempt to convert an array of strings to an array of numbers
+ * @param {Array} numsAsStrings array of strings
+ * @returns {Array|Error} an array or an error object
+ */
+ function convertAndValidateNumsArray(numsAsStrings) {
+    let result = [];
+  
+    for (let i = 0; i < numsAsStrings.length; i++) {
+      let valToNumber = Number(numsAsStrings[i]);
+  
+      if (Number.isNaN(valToNumber)) {
+        return new Error(
+          `The value '${numsAsStrings[i]}' at index ${i} is not a valid number.`
+        );
+      }
+  
+      result.push(valToNumber);
+    }
+    return result;
+  }
+
+
+  module.exports = {
+    createFrequencyCounter,
+    findMean,
+    findMedian,
+    findMode,
+    convertAndValidateNumsArray
+  }

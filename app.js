@@ -1,26 +1,32 @@
 const express = require('express');
-
 const app = express();
 
 app.use(express.json());
 
+// add the functions from helper_function file
+const { convertAndValidateNumsArray, findMode, findMean, findMedian } = require('./helper_function')
 
 app.get('/', function(req, res) {
     return res.send('the slash home page');
 });
 
+
+
 app.get('/mean', function(req, res) {
 
+    let numsAsStrings = req.query.nums.split(',');
+    // check if anything bad was put in
+    let nums = convertAndValidateNumsArray(numsAsStrings);
 
-    return res.send(mean(req));
+    let result = {
+        operation: "mean",
+        result: findMean(nums)
+      }
+    
+      return res.send(result);
 });
 
-function mean(nums) {
-    debugger;
-    let meanOfNums = nums.length / 2
-    console.log(meanOfNums);
-}
-mean([1,2,3,4,5])
+
 
 app.get('/median', function(req, res) {
     return res.send('blue');
