@@ -29,11 +29,32 @@ app.get('/mean', function(req, res) {
 
 
 app.get('/median', function(req, res) {
-    return res.send('blue');
+  let numsAsStrings = req.query.nums.split(',');
+  // check if anything bad was put in
+  let nums = convertAndValidateNumsArray(numsAsStrings);
+  if (nums instanceof Error) {
+    throw new ExpressError(nums.message);
+  }
+
+  let result = {
+    operation: "median",
+    result: findMedian(nums)
+  }
+
+  return res.send(result);
 });
 
+
+
 app.get('/mode', function(req, res) {
-    return res.send('a new thing');
+let numsAsStrings = req.query.nums.split(',')
+let nums = convertAndValidateNumsArray(numsAsStrings);
+  let result = {
+    operation: "mode",
+    result: findMode(nums)
+  }
+
+    return res.send(result);
 });
 
 //mandatory
