@@ -11,35 +11,28 @@ app.get('/', function(req, res) {
 });
 
 
-
+//////////// math routes ///////////////
 app.get('/mean', function(req, res) {
 
-    let numsAsStrings = req.query.nums.split(',');
-    // check if anything bad was put in
-    let nums = convertAndValidateNumsArray(numsAsStrings);
+let numsAsStrings = req.query.nums.split(',');
+let nums = convertAndValidateNumsArray(numsAsStrings);
+let result = {
+  operation: "mean",
+  result: findMean(nums)
+}
 
-    let result = {
-        operation: "mean",
-        result: findMean(nums)
-      }
-    
-      return res.send(result);
+  return res.send(result);
 });
 
 
 
 app.get('/median', function(req, res) {
-  let numsAsStrings = req.query.nums.split(',');
-  // check if anything bad was put in
-  let nums = convertAndValidateNumsArray(numsAsStrings);
-  if (nums instanceof Error) {
-    throw new ExpressError(nums.message);
-  }
-
-  let result = {
-    operation: "median",
-    result: findMedian(nums)
-  }
+let numsAsStrings = req.query.nums.split(',');
+let nums = convertAndValidateNumsArray(numsAsStrings);
+let result = {
+  operation: "median",
+  result: findMedian(nums)
+}
 
   return res.send(result);
 });
@@ -49,13 +42,16 @@ app.get('/median', function(req, res) {
 app.get('/mode', function(req, res) {
 let numsAsStrings = req.query.nums.split(',')
 let nums = convertAndValidateNumsArray(numsAsStrings);
-  let result = {
-    operation: "mode",
-    result: findMode(nums)
-  }
+let result = {
+  operation: "mode",
+  result: findMode(nums)
+}
 
-    return res.send(result);
+  return res.send(result);
 });
+
+
+
 
 //mandatory
 app.listen(3000, function(){
